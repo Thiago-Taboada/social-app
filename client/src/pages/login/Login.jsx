@@ -1,36 +1,67 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import "./login.scss";
 
 const Login = () => {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+  const [err, setErr] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
   const { login } = useContext(AuthContext);
 
-  const handleLogin = () => {
-    login();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(inputs);
+      navigate("/");
+    } catch (err) {
+      setErr(err.response.data);
+    }
   };
+
+  useEffect(() => {
+    document.title = "Login - Super Social";
+  }, []);
 
   return (
     <div className="login">
       <div className="card">
         <div className="left">
-          <h1>Hello World.</h1>
+          <h1>Super Social.</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero cum,
-            alias totam numquam ipsa exercitationem dignissimos, error nam,
-            consequatur.
+            Bem-vindo de volta! Faça login para acessar sua conta. Conecte-se com pessoas de todos os cantos do mundo e continue a fazer parte dessa jornada única
           </p>
-          <span>Don't you have an account?</span>
+
+          <span>Ainda não possui uma conta?</span>
           <Link to="/register">
-            <button>Register</button>
+            <button>Cadastrar</button>
           </Link>
         </div>
         <div className="right">
-          <h1>Login</h1>
+          <h1>Entrar</h1>
           <form>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button onClick={handleLogin}>Login</button>
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              placeholder="Senha"
+              name="password"
+              onChange={handleChange}
+            />
+            {err && err}
+            <button onClick={handleLogin}>Entrar</button>
           </form>
         </div>
       </div>

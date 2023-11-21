@@ -20,9 +20,11 @@ const Navbar = () => {
     <div className="navbar">
       <div className="left">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span>lamasocial</span>
+          <span>Super Social</span>
         </Link>
-        <HomeOutlinedIcon />
+        <Link to="/" style={{ textDecoration: "none", color: "#000"}}>
+          <HomeOutlinedIcon />
+        </Link>
         {darkMode ? (
           <WbSunnyOutlinedIcon onClick={toggle} />
         ) : (
@@ -39,11 +41,13 @@ const Navbar = () => {
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
         <div className="user">
-          <img
-            src={currentUser.profilePic}
-            alt=""
-          />
-          <span>{currentUser.name}</span>
+          <img src={"/upload/" + currentUser.profilePic} alt="" />
+          <Link
+            to={`/profile/${currentUser.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <span>{currentUser.name}</span>
+          </Link>
         </div>
       </div>
     </div>

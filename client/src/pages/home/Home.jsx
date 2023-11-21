@@ -1,16 +1,19 @@
-import Stories from "../../components/stories/Stories"
-import Posts from "../../components/posts/Posts"
-import Share from "../../components/share/Share"
-import "./home.scss"
+import React, { useEffect } from 'react';
+import Posts from "../../components/posts/Posts";
+import Share from "../../components/share/Share";
+import "./home.scss";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Inicio - Super Social";
+  }, []);
+
   return (
     <div className="home">
-      <Stories/>
-      <Share/>
-      <Posts/>
+      <Share />
+      <Posts />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
